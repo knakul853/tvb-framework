@@ -500,3 +500,23 @@ function startSpaceTimeConnectivity() {
     drawSceneSpaceTime();
 }
 
+
+/*
+
+weight matrix experiment.........................
+in progress..............
+
+*/
+
+function startConnectivityMatrix() {
+    SELECTED_TAB = CONNECTIVITY_MATRIX_TAB; 
+    $("#matrix-plot-id").show(); // change id with my own id
+    document.getElementById(CONNECTIVITY_MATRIX_ID).redrawFunctionRef = draw;   // interface-like function used in HiRes image exporting
+    connectivityMatrix_startGL();
+    //GFUNC_bind_gl_resize_handler();
+    // Sync size to parent. While the other tabs had been active the window might have resized.
+    updateGLCanvasSize(CONNECTIVITY_MATRIX_ID);
+    draw();
+}
+
+
