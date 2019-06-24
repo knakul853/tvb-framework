@@ -17,12 +17,6 @@
  *
  **/
 
-/*
-
-For matrix drawing reference is taken from space-time part
- work in progress.................
-
-*/
 
 
 var CONNECTIVITY_MATRIX_ID = "GLcanvas_MATRIX" // canvas id for the matrix
@@ -42,7 +36,9 @@ var mydefaultZ = -2.0;                // Default plot Z position of -2.0
 var mydoPick = false;                    // No picking by default
 var mynrOfSteps = 1;                    // Number of space-time plots we will draw in scene
 var mycolorsForPicking = [];            // The colors which are used for the picking scheme
-               // Keep track of the rotations for each plot
+
+var myplotTranslations = [];            // Keep track of the translation for each plot.
+var myplotRotations = [];                // Keep track of the rotations for each plot
 var myzoomedInMatrix = -1;            // The matrix witch is currently zoomed in on
 var myclickedMatrix = -1;
 var mybackupTranslations = [];
@@ -50,27 +46,15 @@ var mybackupRotations = [];
 var myanimationStarted = false;
 var myalphaValueMatrix = 1.0;                // original alpha value for default plot        
 var mybackupAlphaValue = myalphaValueMatrix;    // backup used in animations
-
-
-function myinitColorsForPicking() {
-    mycolorsForPicking = [];
-    for (var i=0; i <= mynrOfSteps; i++) {
-        // Go up to nrOfSteps since for 0 we will consider the full matrix as being clicked
-        var r = parseInt(1.0 / (i + 1) * 255);
-        var g = parseInt(i / mynrOfSteps * 255);
-        var b = 0.0;
-        mycolorsForPicking.push([r / 255, g / 255, b / 255]);
-        var colorKey = r + '' + g + '0';
-        GL_colorPickerMappingDict[colorKey] = i;
-    }
-    GL_initColorPickFrameBuffer();
-}
-
+var minSelectedDelayValue = -1;
+var maxSelectedDelayValue = -1;
+var myanimationTimeout = 33; // 30Hz
+var myanimationGranularity = 20;
 /*
  * Custom shader initializations specific for the space-time connectivity plot
  */
 function initShaders_MATRIX() {
-    createAndUseShader("shader-plot-fs", "shader-plot-vs");
+    createAndUseShader("shader-mymatrix-fs", "shader-mymatrix-vs");
     SHADING_Context.basic_program_init(GL_shaderProgram);
 
     GL_shaderProgram.drawLines = gl.getUniformLocation(GL_shaderProgram, "uDrawLines");
@@ -87,13 +71,12 @@ function initShaders_MATRIX() {
 function connectivityMatrix_startGL() {
     conectivityMatrix_initCanvas();
     //Do the required initializations for the connectivity space-time visualizer
-    initShaders_MATRIX();
+   initShaders_MATRIX();
 
     gl.clearDepth(1.0);
     gl.enable(gl.DEPTH_TEST);
     gl.depthFunc(gl.LEQUAL);
 
-  //  updateMatrixHeader();
 }
 
 function _GL_createBuffer(data, type){
@@ -106,9 +89,9 @@ function _GL_createBuffer(data, type){
 }
 
 /*
- * Create the required buffers for the weight matrix...
+ * Create the required buffers for the space-time plot.
  */
-function createMatrix() {  //todo:understand the working of every element
+function createMatrix() {
     var nrElems = GVAR_interestAreaVariables[GVAR_selectedAreaType].values.length;
     // starting 'x' and 'y' axis values for the plot in order to center around (0, 0)
     var startX = - myplotSize / 2;
@@ -246,16 +229,34 @@ function mygenerateColors(tractValue, intervalLength) {
 }
 
 
-function conectivityMatrix_initCanvas() {
-    var canvas = document.getElementById(CONNECTIVITY_MATRIX_ID);
-    initGL(canvas);
+
+function myConnStepPlotInitColorBuffers() {
+    myinitColorsForPicking();
+    myplotColorBuffers = [];
+    var stepValue = (mymaxSelectedDelayValue - myminSelectedDelayValue) / mynrOfSteps;
+    myplotColorBuffers.push(mygenerateColors((mymaxSelectedDelayValue + myminSelectedDelayValue) / 2, mymaxSelectedDelayValue - minSelectedDelayValue));
+    // In order to avoid floating number approximations which keep the loop for one more iteration just approximate by
+    // substracting 0.1
+    for (var tractValue = myminSelectedDelayValue + stepValue / 2; tractValue < parseInt(mymaxSelectedDelayValue) - 0.1; tractValue = tractValue + stepValue) {
+        myplotColorBuffers.push(mygenerateColors(tractValue, stepValue));
+    } 
     var theme = ColSchGetTheme().connectivityStepPlot;
     gl.clearColor(theme.backgroundColor[0], theme.backgroundColor[1], theme.backgroundColor[2], theme.backgroundColor[3]);
-    myplotSize = parseInt(canvas.clientWidth / 3);    // Compute the size of one connectivity plot depending on the canvas width
+    draw();
+}
 
-   createMatrix()  // changing the own
-    
-  
+
+
+
+
+function conectivityMatrix_initCanvas() {
+    var canvas = document.getElementById(CONNECTIVITY_MATRIX_ID);
+   initGL(canvas);
+    var theme = ColSchGetTheme().connectivityStepPlot;
+           gl.clearColor(theme.backgroundColor[0], theme.backgroundColor[1], theme.backgroundColor[2], theme.backgroundColor[3]);
+    plotSize = parseInt(canvas.clientWidth / 3);    // Compute the size of one connectivity plot depending on the canvas width
+    createMatrix();
+
 }
 
 
@@ -263,11 +264,10 @@ function conectivityMatrix_initCanvas() {
 /*
  * Draw the full matrix, with the outline square.
  */
-function drawMyMatrix(mydoPick, idx) {
+function drawMyMatrix() {
     var theme = ColSchGetTheme().connectivityStepPlot;
     mvPushMatrix();
     
-
     
     // Draw the actual matrix.
     gl.bindBuffer(gl.ARRAY_BUFFER, myverticesBuffer);
@@ -277,7 +277,6 @@ function drawMyMatrix(mydoPick, idx) {
     setMatrixUniforms();
     
 
-        gl.bindBuffer(gl.ARRAY_BUFFER, myplotColorBuffers[idx]);
         gl.vertexAttribPointer(GL_shaderProgram.vertexColorAttribute, 3, gl.FLOAT, false, 0, 0);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, myindexBuffer);
         gl.drawElements(gl.TRIANGLES, myindexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
@@ -289,40 +288,48 @@ function drawMyMatrix(mydoPick, idx) {
         gl.uniform1i(GL_shaderProgram.drawLines, false);
         
         // Now draw the square outline
-        if (idx == myclickedMatrix) {
-            gl.uniform3f(GL_shaderProgram.lineColor, theme.selectedOutlineColor[0], theme.selectedOutlineColor[1], theme.selectedOutlineColor[2]);
-            gl.lineWidth(3.0);
-        } else {
+        // if (idx == myclickedMatrix) {
+            //  gl.uniform3f(GL_shaderProgram.lineColor, theme.selectedOutlineColor[0], theme.selectedOutlineColor[1], theme.selectedOutlineColor[2]);
+            //  gl.lineWidth(3.0);
+        // } else {
             gl.uniform3f(GL_shaderProgram.lineColor, theme.outlineColor[0], theme.outlineColor[1], theme.outlineColor[2]);
             gl.lineWidth(2.0);
-        }
+        // }
         gl.bindBuffer(gl.ARRAY_BUFFER, myoutlineVerticeBuffer);
         gl.vertexAttribPointer(GL_shaderProgram.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
-      gl.bindBuffer(gl.ARRAY_BUFFER, myoutlineNormalsBuffer);
+         gl.bindBuffer(gl.ARRAY_BUFFER, myoutlineNormalsBuffer);
         gl.vertexAttribPointer(GL_shaderProgram.vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
         gl.uniform1i(GL_shaderProgram.drawLines, true);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, outlineLinesBuffer);
         gl.drawElements(gl.LINES, myoutlineLinesBuffer.numItems, gl.UNSIGNED_SHORT, 0);
         gl.lineWidth(2.0);
         gl.uniform1i(GL_shaderProgram.drawLines, false);
+  // }
 
     mvPopMatrix();
 }
 
 
-
-function draw() {        //gl.viewportWidth, gl.viewportHeight
+/*
+ * Draw the entire  matrices.
+ */
+function draw() {
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
     // View angle is 45, we want to see object from 0.1 up to 800 distance from viewer
     perspective(45, gl.viewportWidth / gl.viewportHeight, near, 800.0);
 
     loadIdentity();
-           gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    // Translate to get a good view.
+    mvTranslate([0.0, 0.0, -600]);
+    
 
-        for (var i = 0; i < myplotColorBuffers.length; i++) {
-            drawMyMatrix(true, i);
-        }
-      
+        gl.uniform1f(GL_shaderProgram.alphaValue, myalphaValueMatrix);
+        gl.uniform1f(GL_shaderProgram.isPicking, 0);
+        gl.uniform3f(GL_shaderProgram.pickingColor, 1, 1, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+        
+            drawMyMatrix();
     
 }
 
