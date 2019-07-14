@@ -17,6 +17,15 @@
  *
  **/
 
+/*
+
+* This js code let you draw the connectivity matrix with weight and tract components.
+  This aims to measure the performance with respect to the older one ...
+
+   work in progress................
+
+*/
+
 
 var CONNECTIVITY_MATRIX_ID = "GLcanvas_MATRIX" // canvas id for the matrix
 var myplotColorBuffers;            // A list of color buffers for the  connectivity matrices
@@ -28,7 +37,7 @@ var mynormalsBuffer = [];                // A list of normal buffers for the var
 var myindexBuffer = [];                // A list of triangles index buffers for the various space-time connectivity matrices
 var mylinesIndexBuffer = [];            // A list of line index buffers for the various space-time connectivity matrices
 var colorBuffer //mywork.....
-var myplotSize = 450;                    // Default plot size of 250 pixels
+var myplotSize =  480;                    // Default plot size of 250 pixels
 var mydefaultZ = -2.0;                // Default plot Z position of -2.0
 var myalphaValueMatrix = 1.0;                // original alpha value for default plot        
 var mybackupAlphaValue = myalphaValueMatrix;    // backup used in animations
@@ -41,38 +50,27 @@ Generating the color for the connectivity matrices .......
 */
 
 function mygenerateColors(tractValue, intervalLength) {
-    var theme = ColSchGetTheme().connectivityStepPlot;   // this is the theme of the matrix,same is space time plot..
-    var matrixWeightsValues = GVAR_interestAreaVariables[1].values; //An 2D array with all weight data...
+    var theme = ColSchGetTheme().connectivityStepPlot;   // this is the theme of the matrix,same is space time plot.
+    var matrixWeightsValues = GVAR_interestAreaVariables[1].values; //An 2D array with all weight data.
     var matrixTractsValues = GVAR_interestAreaVariables[2].values;
     var minWeightsValue = GVAR_interestAreaVariables[1].min_val; // Minimum weights value in range(0,>0);
-    var maxWeightsValue = GVAR_interestAreaVariables[1].max_val; //Maximum weights value in range(>0);
-    var nrElems = matrixWeightsValues.length;                    // dimensions of matrix....let N X N.
-    var colors = new Float32Array(nrElems * nrElems * 3 * 4); // Array for the colors...
+    var maxWeightsValue = GVAR_interestAreaVariables[1].max_val; // Maximum weights value in range(>0);
+    var nrElems = matrixWeightsValues.length;                     // Dimensions of matrix....let N X N.
+    var colors = new Float32Array(nrElems * nrElems * 3 * 4);     // Array for the colors...
     var linearIndex = -1;
 
     for (var i = 0; i < nrElems; i++) {
         for (var j = 0; j < nrElems; j++) {
             linearIndex += 1;
-            // For each element generate 4 identical colors corresponding to the 4 vertices used for the element
-           // var delayValue = matrixTractsValues[i][nrElems - j - 1]; /// conductionSpeed;
+
             var weight = matrixWeightsValues[i][nrElems - j - 1];
 
-            //var isWithinInterval = (delayValue >= (tractValue - intervalLength / 2) &&
-                                  // delayValue <= (tractValue + intervalLength / 2));
             var color;
             
 
 
             color = weight!=0?getGradientColor(weight, minWeightsValue, maxWeightsValue).slice(0, 3): theme.noValueColor;
 
-
-            // if (weight != 0) 
-            // {
-            //     color = getGradientColor(weight, minWeightsValue, maxWeightsValue).slice(0, 3);
-            // }
-            // else{
-            //     color = theme.noValueColor;
-            // }
 
             color = [].concat(color, color, color, color);
             colors.set(color, 3 * 4 * linearIndex);
@@ -115,7 +113,7 @@ function myinitColorsForPicking() {
 
 
 /*
- * Custom shader initializations specific for the space-time connectivity plot
+ * Custom shader initializations specific for the  weight connectivity matrix
  */
 function initShaders_MATRIX() {
     createAndUseShader("shader-mymatrix-fs", "shader-mymatrix-vs");
@@ -131,10 +129,14 @@ function initShaders_MATRIX() {
     gl.enableVertexAttribArray(GL_shaderProgram.vertexColorAttribute);
 }
 
+/*
 
+*  Initializing the connectivity matrix webgl part..
+
+*/
 function connectivityMatrix_startGL() {
     conectivityMatrix_initCanvas();
-    //Do the required initializations for the connectivity space-time visualizer
+    //Do the required initializations for the connectivity weighted matrix 
    initShaders_MATRIX();
 
     gl.clearDepth(1.0);
@@ -143,6 +145,12 @@ function connectivityMatrix_startGL() {
     myConnStepPlotInitColorBuffers();
 
  }
+
+ /*
+
+ *  Create the buffer for the requirements by all Functions in General.
+
+ */
 
 function _GL_createBuffer(data, type){
     type = type || gl.ARRAY_BUFFER;
@@ -154,23 +162,25 @@ function _GL_createBuffer(data, type){
 }
 
 /*
- * Create the required buffers for the space-time plot.
+ * Create the required buffers for the weight matrix.
  */
 function createMatrix() {
     var nrElems = GVAR_interestAreaVariables[GVAR_selectedAreaType].values.length;
+    console.log(nrElems);
     // starting 'x' and 'y' axis values for the plot in order to center around (0, 0)
     var startX = - myplotSize / 2;
     var startY = - myplotSize / 2;
     // The size of a matrix element
     var elementSize = myplotSize / nrElems;
+    var ext = gl.getExtension('OES_element_index_uint');
     // Create arrays from start for performance reasons 
     var vertices = new Float32Array(nrElems * nrElems * 4 * 3);
     var normals = new Float32Array(nrElems * nrElems * 4 * 3);
-    var indices = new Uint16Array(nrElems * nrElems * 2 * 3);
-    var linesIndices = new Uint16Array(nrElems * nrElems * 2 * 4);
+    var indices = new Uint32Array(nrElems * nrElems * 2 * 3);
+    var linesIndices = new Uint32Array(nrElems * nrElems * 2 * 4);
 
     var linearIndex = -1;
-
+    
     for (var i = 0; i < nrElems; i++) {
         for (var j = 0; j < nrElems; j++) {
             linearIndex += 1;
@@ -225,7 +235,9 @@ function createMatrix() {
     mylinesIndexBuffer = _GL_createBuffer(linesIndices, gl.ELEMENT_ARRAY_BUFFER);
     mycreateOutlineSquare(startX, startY, elementSize, nrElems);
 
-
+   /*
+   * the standard color scheme
+   */
 
     var colors = [
         1.0,  1.0,  1.0,  1.0,    // white
@@ -258,18 +270,17 @@ function mycreateOutlineSquare(startX, startY, elementSize, nrElems) {
 
 
 /*
- * Generate a color buffer which represents the state of the weights for 
- * a given 'interval' centered around a given tract value
+ * Generate a color buffer which represents the weights for 
+ * a given edges between two vertex
  * 
- * @param tractValue: the center of the interval
- * @param intervalLength: the length of the interval
  * 
- * @returns: a color buffer, where for the connections that fall in the defined interval,
- *              a gradient color is assigned based on the weights strenght, and for the 
+ * @returns: a color buffer
+ *     a gradient color is assigned based on the weights strenght, and for the 
  *              rest the color black is used.
  */
 
 function conectivityMatrix_initCanvas() {
+
     var canvas = document.getElementById(CONNECTIVITY_MATRIX_ID);
    initGL(canvas);
     var theme = ColSchGetTheme().connectivityStepPlot;
@@ -285,38 +296,47 @@ function conectivityMatrix_initCanvas() {
  * Draw the full matrix, with the outline square.
  */
 function drawMyMatrix() {
+
     var theme = ColSchGetTheme().connectivityStepPlot;
     mvPushMatrix();
  
     // Draw the actual matrix.
     gl.bindBuffer(gl.ARRAY_BUFFER, myverticesBuffer);
     gl.vertexAttribPointer(GL_shaderProgram.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
-  gl.bindBuffer(gl.ARRAY_BUFFER, mynormalsBuffer);
-   gl.vertexAttribPointer(GL_shaderProgram.vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, mynormalsBuffer);
+    gl.vertexAttribPointer(GL_shaderProgram.vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
     setMatrixUniforms();
          
         gl.bindBuffer(gl.ARRAY_BUFFER, myplotColorBuffers);
         gl.vertexAttribPointer(GL_shaderProgram.vertexColorAttribute, 3, gl.FLOAT, false, 0, 0);
+
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, myindexBuffer);
-        gl.drawElements(gl.TRIANGLES, myindexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(gl.TRIANGLES, myindexBuffer.numItems, gl.UNSIGNED_INT, 0);
         gl.uniform3f(GL_shaderProgram.lineColor, theme.lineColor[0], theme.lineColor[1], theme.lineColor[2]);
+
         gl.uniform1i(GL_shaderProgram.drawLines, true);
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mylinesIndexBuffer);
         gl.lineWidth(1.0);
-        gl.drawElements(gl.LINES, mylinesIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+
+        gl.drawElements(gl.LINES, mylinesIndexBuffer.numItems, gl.UNSIGNED_INT, 0);
         gl.uniform1i(GL_shaderProgram.drawLines, false);
         
         
         gl.uniform3f(GL_shaderProgram.lineColor, theme.outlineColor[0], theme.outlineColor[1], theme.outlineColor[2]);
         gl.lineWidth(2.0);
         gl.bindBuffer(gl.ARRAY_BUFFER, myoutlineVerticeBuffer);
+
         gl.vertexAttribPointer(GL_shaderProgram.vertexPositionAttribute, 3, gl.FLOAT, false, 0, 0);
         gl.bindBuffer(gl.ARRAY_BUFFER, myoutlineNormalsBuffer);
+
         gl.vertexAttribPointer(GL_shaderProgram.vertexNormalAttribute, 3, gl.FLOAT, false, 0, 0);
         gl.uniform1i(GL_shaderProgram.drawLines, true);
+
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, outlineLinesBuffer);
-        gl.drawElements(gl.LINES, myoutlineLinesBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+        gl.drawElements(gl.LINES, myoutlineLinesBuffer.numItems, gl.UNSIGNED_INT, 0);
         gl.lineWidth(2.0);
+
         gl.uniform1i(GL_shaderProgram.drawLines, false);
 
     mvPopMatrix();
@@ -332,12 +352,10 @@ function draw() {
     // Translate to get a good view.
     mvTranslate([0.0, 0.0, -600]);
     
-
         gl.uniform1f(GL_shaderProgram.alphaValue, myalphaValueMatrix);
         gl.uniform1f(GL_shaderProgram.isPicking, 0);
         gl.uniform3f(GL_shaderProgram.pickingColor, 1, 1, 1);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
         
             drawMyMatrix();
      
