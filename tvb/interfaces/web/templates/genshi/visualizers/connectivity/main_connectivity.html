@@ -91,7 +91,7 @@
            title="Clone the connectivity cutting the unselected edges. Check the '* Select *' buttons bellow to see what it is included">Branch</a>
 
     <div id="chkList" class="matrix">
-    	<ul class="matrix-switcher tabswitcher">
+    	<!-- <ul class="matrix-switcher tabswitcher">
 			<li class="active">
 				<a
 				 href="#" 
@@ -99,7 +99,7 @@
 				onclick="hideRightSideTabs(this); startConnectivityMatrix();">Weights Matrix</a>
 			</li>
 			<li><a href="#" onclick="hideRightSideTabs(this); startConnectivityMatrix();">Tracts Matrix</a></li>
-		</ul>
+		</ul> -->
 
 
 		<xi:include href="matrix_with_quadrants.html"/>
@@ -179,25 +179,25 @@
 
 <!--! Toolbar -->
 
-	<section class="view-column view-matrix-tools col-3">
+	<section class="view-column view-matrix-tools col-3" style="overflow: visible">
 			<h4 style="text-align:center"><mark></mark> selection</h4>
 
 
-			<div id="chkList" class="matrix">
-					<ul class="matrix-switcher tabswitcher">
+			<div style="margin: 5%">
+					<ul class="matrix-switcher tabswitcher" style="margin: 5%">
 						<li class="active">
 							<a
 							 href="#" 
 							 id="rightSideDefaultSelectedTabId"
 							onclick="hideRightSideTabs(this); startConnectivityMatrix();">Weights Matrix</a>
 						</li>
+					</ul>
+					<ul class="matrix-switcher tabswitcher" style="margin: 5%">
 						<li><a href="#" onclick="hideRightSideTabs(this); startConnectivityMatrix();">Tracts Matrix</a></li>
 					</ul>
 			
 					<!--! Toolbar -->
-					<ul class="toolbar-inline matrix-control">
-			
-						<li>Selection</li>
+					<ul class="toolbar-inline matrix-control" style="margin: 10px">
 			
 						<!--! Node/Edge operations -->
 						<li class="selection-ops">
