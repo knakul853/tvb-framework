@@ -19,37 +19,42 @@
     <script type="text/javascript" src="/static_view/connectivity/scripts/connectivity2DScript.js?$currentVersionJS"></script>
     <script type="text/javascript" src="/static_view/connectivity/scripts/connectivityStepPlot.js?$currentVersionJS"></script>
     <script type="text/javascript" src="/static_view/connectivity/scripts/connectivityGlobals.js?$currentVersionJS" ></script>
-    <script type="text/javascript" src="/static_view/connectivity/scripts/selectionControlScript.js?$currentVersionJS"></script>
+	<script type="text/javascript" src="/static_view/connectivity/scripts/selectionControlScript.js?$currentVersionJS"></script>
+	<script type="text/javascript" src="/static_view/connectivity/scripts/myconnectivityMatrix.js?$currentVersionJS" ></script>
+
     <script type="text/javascript" src="/static_view/commons/scripts/regionSelector.js?$currentVersionJS"></script>
     <script type="text/javascript" src="/static/coloring/colorpicker.js?$currentVersionJS"></script>
     <link rel="stylesheet" type="text/css" href="/static/coloring/colorpicker.css?$currentVersionJS"/>
 	<link rel="stylesheet" type="text/css" href="/static/style/section_connectivity.css?$currentVersionJS"/>
-	
+
+      
+
+
 	<py:def function="drawMatrixLegendArea(canvasContainerID)">
 		<div class="matrix-legend" id="$canvasContainerID"></div>
-		
-		<div class="matrix-legend"> 
+		<div class="matrix-legend">
 			<table id="table-${canvasContainerID}" class="table-legend-labels">
 		    	<py:for each='label in range(7)'>
 		    		<py:if test='label != 0'>
-			    		<tr height="${str(100/8) + '%'}" style='vertical-align: bottom;'> <td>${label}</td> </tr>
+						<tr height="${str(100/8) + '%'}" style='vertical-align: bottom;'> <td>${label}</td> </tr>
 		    		</py:if>
 		    		<py:if test='label == 0'>
 			    		<tr height="20px"> <td>${label}</td> </tr>
 		    		</py:if>
 		    	</py:for>
 		    </table>
-		</div> 
+		</div>
 	</py:def>
-	
+
+
 	<!--! Connectivity viewer -->
 	<section class="view-column connectivity-viewer col-1">
 	<h4><mark>View</mark> Large Scale Connectivity</h4>
 	<a id="showConnectivityDetailsBtn" href="#" onclick='displayNodeDetails("${connectivity_entity.gid}", "${connectivity_entity.type}", null, "Visualizers");'
        class="column-control action action-big-analyze" title="Overlay info for current connectivity entity.">Open Overlay</a>
-	
+
 	<div class="monitor" id="monitorDiv">
-		
+
 		<ul class="view-switcher tabswitcher">
 			<li class="active"><a id="leftSideDefaultSelectedTabId" href="#" onclick="hideLeftSideTabs(this); startConnectivity();">3D Edges</a></li>
 			<li><a href="#" onclick="hideLeftSideTabs(this); start2DConnectivity(0);">Hemisphere 1</a></li>
@@ -57,16 +62,16 @@
 			<li><a href="#" onclick="hideLeftSideTabs(this); start2DConnectivity(2);">Hemisphere 2</a></li>
 			<li><a href="#" onclick="hideLeftSideTabs(this); startSpaceTimeConnectivity()">Space Time</a></li>
 		</ul>
-		
+
 		<xi:include href="connectivity_view.html"/>
 		${drawConnectivityViewer(True)}
 		<xi:include href="connectivity_2D_view.html"/>
 		<xi:include href="connectivity_plot_view.html"/>
 		${drawConnectivityPlotViewer()}
-		
-	</div>	        
+
+	</div>
 	</section>
-		
+
 	<!--! Matrix viewer and controls -->
 	<section id="scrollable-matrix-section" class="view-column matrix-controller col-2"
             py:with="nodeCount=len(pointsLabels);halfNodeCount=int(nodeCount / 2)">
@@ -87,74 +92,33 @@
 
     <div id="chkList" class="matrix">
     	<ul class="matrix-switcher tabswitcher">
-			<li class="active"><a href="#" id="rightSideDefaultSelectedTabId" onclick="hideRightSideTabs(this); showWeightsTable();">Weights Matrix</a></li>
-			<li><a href="#" onclick="hideRightSideTabs(this); showTractsTable();">Tracts Matrix</a></li>
-		</ul>
-
-		<!--! Toolbar -->
-    	<ul class="toolbar-inline matrix-control">
-
-    		<li>Selection</li>
-    		
-			<!--! Node/Edge operations -->
-			<li class="selection-ops">
-				<nav class="inline-menu">
-					<button class="action action-menu">Edge Operations</button>
-
-					<div class="extension">
-		    			<div class="dropdown-pane">
-		    				<ul>
-		    					<li class="selectors">
-		    						<label for="con-op-operation"><mark>Operation</mark></label>
-		    						<select id='con-op-operation'></select>
-		    					</li>
-		    					
-		    					<li class="selectors">
-		    						<label for="con-op-edges-type"><mark>Edges type</mark></label>
-		    						<select id='con-op-edges-type'></select>
-		    					</li>
-		    					
-		    					<li class="operators">
-		    						<label for="con-op-arguments"><mark>Weight change</mark></label>
-		    						<input id='con-op-arguments' type='text' value='' placeholder="numeric value"/>
-		    					</li>
-		    					
-		    					<li class="actors">
-		    						<button class="action action-analyze" onclick='doGroupOperation()' value='Apply weight change to selected nodes'>Apply weight change</button>
-		    					</li>
-		    				</ul>
-		    			</div>
-		    		</div>
-				</nav>
+			<li class="active">
+				<a
+				 href="#" 
+				 id="rightSideDefaultSelectedTabId"
+				onclick="hideRightSideTabs(this); startConnectivityMatrix();">Weights Matrix</a>
 			</li>
-
-            <li class="selector-storage">
-                <xi:include href="../commons/channel_selector_button.html" />
-                ${drawRegionSelectorButton(connectivity_entity.display_name, groupedLabels, initialSelection, buttonTitle="Select Nodes")}
-            </li>
-
-            <li class="selector-storage">
-                <xi:include href="../commons/channel_selector_quick.html"/>
-                ${drawQuickSelector("selection-text-area", "loadSelectionFromTextBtn")}
-            </li>
+			<li><a href="#" onclick="hideRightSideTabs(this); startConnectivityMatrix();">Tracts Matrix</a></li>
 		</ul>
+
 
 		<xi:include href="matrix_with_quadrants.html"/>
-	    
-	       <div class="matrix-viewer" id="div-matrix-weights">
-		<ul class="view-switcher tabswitcher">
-
-			<li><a href="#" onclick="startConnectivityMatrix()">Weight Matrix</a></li>
-		</ul>
 
 
-	         </div>
-	    
-	    
-	    
-	    
+		<div class="matrix-viewer" id="div-matrix-weights">
+
+
+	</div>
+
+
 		<!--! Matrices: Weights -->
-	        <!--! 
+
+		
+			<xi:include href="myconnectivity_matrix.html"/>
+			${drawmymatrix()}
+		
+        <!-- Weights
+
 		<div id="div-matrix-weights" class="matrix-viewer">
 			<div class="matrix-table">
 	        	${draw2DConnectivityMatrix('leftHemisphere', 0, pointsLabels, 0, halfNodeCount, 0, halfNodeCount, 'w')}
@@ -162,13 +126,14 @@
 	        	${draw2DConnectivityMatrix('rightLeftQuarter', 1, pointsLabels, halfNodeCount, nodeCount, 0, halfNodeCount, 'w')}
 	    		${draw2DConnectivityMatrix('rightHemisphere', 3, pointsLabels, halfNodeCount, nodeCount, halfNodeCount, nodeCount, 'w')}
 			</div>
-
+			
 			${drawMatrixLegendArea('weights-legend')}
 	    </div>
-                  -->
+        End -->
+
 		<!--! Matrices: Tracts -->
-	    <!--!
-	    <div id="div-matrix-tracts" class="matrix-viewer">
+		<!-- Tracts
+	   <div id="div-matrix-tracts" class="matrix-viewer">
 	    	<div class="matrix-table">
 	        	${draw2DConnectivityMatrix('leftHemisphereTracts', 0, pointsLabels, 0, halfNodeCount, 0, halfNodeCount, 't')}
 	        	${draw2DConnectivityMatrix('leftRightQuarterTracts', 2, pointsLabels, 0, halfNodeCount, halfNodeCount, nodeCount, 't')}
@@ -177,16 +142,17 @@
 			</div>
 
 			${drawMatrixLegendArea('tracts-legend')}
-	    </div>  -->
+	    </div>
+		End tracts-->
 
     </div>
-    
+
     <py:with vars="start_points_x= str([0, halfNodeCount, 0, halfNodeCount]);
 	               end_points_x= str([halfNodeCount, nodeCount, halfNodeCount, nodeCount]);
 	               start_points_y= str([0, halfNodeCount, halfNodeCount, 0]);
 	               end_points_y= str([halfNodeCount, nodeCount, nodeCount, halfNodeCount]) ">
 
-    <script type="text/javascript">    	
+    <script type="text/javascript">
         $(document).ready(function() {
             // todo: warning the jsons below are huge, practically the whole connectivity in json
             prepareConnectivity2D(${leftHemisphereJson}, ${bothHemisphereJson}, ${rightHemisphereJson});
@@ -206,8 +172,80 @@
 
 	<input type="hidden" id="currentlyEditedNode"/>
 
-    <xi:include href="context_menu_table.html"/>
-    
+	<xi:include href="context_menu_table.html"/>
+
 	</section>
+
+
+<!--! Toolbar -->
+
+	<section class="view-column view-matrix-tools col-3">
+			<h4 style="text-align:center"><mark></mark> selection</h4>
+
+
+			<div id="chkList" class="matrix">
+					<ul class="matrix-switcher tabswitcher">
+						<li class="active">
+							<a
+							 href="#" 
+							 id="rightSideDefaultSelectedTabId"
+							onclick="hideRightSideTabs(this); startConnectivityMatrix();">Weights Matrix</a>
+						</li>
+						<li><a href="#" onclick="hideRightSideTabs(this); startConnectivityMatrix();">Tracts Matrix</a></li>
+					</ul>
+			
+					<!--! Toolbar -->
+					<ul class="toolbar-inline matrix-control">
+			
+						<li>Selection</li>
+			
+						<!--! Node/Edge operations -->
+						<li class="selection-ops">
+							<nav class="inline-menu">
+								<button class="action action-menu">Edge Operations</button>
+			
+								<div class="extension">
+									<div class="dropdown-pane">
+										<ul>
+											<li class="selectors">
+												<label for="con-op-operation"><mark>Operation</mark></label>
+												<select id='con-op-operation'></select>
+											</li>
+			
+											<li class="selectors">
+												<label for="con-op-edges-type"><mark>Edges type</mark></label>
+												<select id='con-op-edges-type'></select>
+											</li>
+			
+											<li class="operators">
+												<label for="con-op-arguments"><mark>Weight change</mark></label>
+												<input id='con-op-arguments' type='text' value='' placeholder="numeric value"/>
+											</li>
+			
+											<li class="actors">
+												<button class="action action-analyze" onclick='doGroupOperation()' value='Apply weight change to selected nodes'>Apply weight change</button>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</nav>
+						</li>
+			
+						<li class="selector-storage">
+							<xi:include href="../commons/channel_selector_button.html" />
+							${drawRegionSelectorButton(connectivity_entity.display_name, groupedLabels, initialSelection, buttonTitle="Select Nodes")}
+						</li>
+			
+						<li class="selector-storage">
+							<xi:include href="../commons/channel_selector_quick.html"/>
+							${drawQuickSelector("selection-text-area", "loadSelectionFromTextBtn")}
+						</li>
+					</ul>
+			
+				</div>
+			
+	</section>
+
+
 </div>
 
