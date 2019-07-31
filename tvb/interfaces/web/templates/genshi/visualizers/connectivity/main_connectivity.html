@@ -21,6 +21,7 @@
     <script type="text/javascript" src="/static_view/connectivity/scripts/connectivityGlobals.js?$currentVersionJS" ></script>
 	<script type="text/javascript" src="/static_view/connectivity/scripts/selectionControlScript.js?$currentVersionJS"></script>
 	<script type="text/javascript" src="/static_view/connectivity/scripts/myconnectivityMatrix.js?$currentVersionJS" ></script>
+	<script type="text/javascript" src="/static_view/connectivity/scripts/myconnectivitytractmatrix.js?$currentVersionJS" ></script>
 
     <script type="text/javascript" src="/static_view/commons/scripts/regionSelector.js?$currentVersionJS"></script>
     <script type="text/javascript" src="/static/coloring/colorpicker.js?$currentVersionJS"></script>
@@ -49,9 +50,12 @@
 
 	<!--! Connectivity viewer -->
 	<section class="view-column connectivity-viewer col-1">
+		<!-- toool
 	<h4><mark>View</mark> Large Scale Connectivity</h4>
 	<a id="showConnectivityDetailsBtn" href="#" onclick='displayNodeDetails("${connectivity_entity.gid}", "${connectivity_entity.type}", null, "Visualizers");'
-       class="column-control action action-big-analyze" title="Overlay info for current connectivity entity.">Open Overlay</a>
+	   class="column-control action action-big-analyze" title="Overlay info for current connectivity entity.">Open Overlay</a>
+	   
+		endstool-->
 
 	<div class="monitor" id="monitorDiv">
 
@@ -76,6 +80,7 @@
 	<section id="scrollable-matrix-section" class="view-column matrix-controller col-2"
             py:with="nodeCount=len(pointsLabels);halfNodeCount=int(nodeCount / 2)">
 
+			<!--toools
         <hgroup>
             <h4><mark>Control</mark> Large Scale Matrices</h4>
             <input type="text" id="newConnectivityNameTag" value="" title="User name for the new Connectivity to be generated"/>
@@ -88,34 +93,54 @@
 
         <a href="#" tabindex='-1' onclick='saveSubConnectivity("$submitURL", "$originalConnectivity", true);'
            class="action action-big-branch action-branch-connectivity column-control"
-           title="Clone the connectivity cutting the unselected edges. Check the '* Select *' buttons bellow to see what it is included">Branch</a>
+		   title="Clone the connectivity cutting the unselected edges. Check the '* Select *' buttons bellow to see what it is included">Branch</a>
+		   
+	tools end -->
 
     <div id="chkList" class="matrix">
-    	<!-- <ul class="matrix-switcher tabswitcher">
-			<li class="active">
+
+    	<ul class="matrix-switcher tabswitcher">
+			<!-- <li class="active">
 				<a
 				 href="#" 
 				 id="rightSideDefaultSelectedTabId"
 				onclick="hideRightSideTabs(this); startConnectivityMatrix();">Weights Matrix</a>
-			</li>
-			<li><a href="#" onclick="hideRightSideTabs(this); startConnectivityMatrix();">Tracts Matrix</a></li>
-		</ul> -->
+			</li> -->
+			<li><a href="#" onclick="hideRightSideTabs(this); startConnectivitytractMatrix();">Tracts Matrix</a></li>
+		</ul>
 
 
 		<xi:include href="matrix_with_quadrants.html"/>
 
-
+        <xi:include href="myconnectivity_matrix.html"/>
 		<div class="matrix-viewer" id="div-matrix-weights">
+			<div class="matrix-table">
+				   </div>
 
-
-	</div>
+		</div>
+		<!-- ${drawmymatrix()} -->
+		
+		
 
 
 		<!--! Matrices: Weights -->
-
 		
-			<xi:include href="myconnectivity_matrix.html"/>
-			${drawmymatrix()}
+
+
+        
+		<!--! Matrices: tracts  -->
+		<!-- this div reduces the size of the canvas due to css properties written on it -->
+		<div class="matrix-tracts" id="div-matrix-tract">
+			<div class="matrix-table">
+				<xi:include href="mytract_matrix.html"/>    
+				   <!-- ${drawmytractmatrix()}  -->
+
+				</div>
+ 
+		</div>
+		
+		${drawmytractmatrix()} 
+		 
 		
 
     </div>
@@ -153,24 +178,51 @@
 <!--! Toolbar -->
 
 	<section class="view-column view-matrix-tools col-3" style="overflow: visible">
-			<h4 style="text-align:center"><mark></mark> selection</h4>
 
 
-			<div style="margin: 5%">
+			<hgroup>
+					<h4><mark>Control</mark></h4>
+					<input 
+					type="text"
+					 id="newConnectivityNameTag"
+					  value="Large Scale matrix" 
+					  title="User name for the new Connectivity to be generated"
+					  size="10"
+					  style="margin: 5px 35px 5px 35px"
+					  />
+					  <label style="float:right;margin-right: 50px;color: aliceblue"> all nodes selected </label>
+			</hgroup>
+		
+				<a href="#" tabindex='-1' onclick='saveSubConnectivity("$submitURL", "$originalConnectivity", false);'
+				   class="action action-big-new action-new-connectivity column-control"
+				   title="Create a new connectivity from the selected nodes. Check the '* Select *' buttons bellow to see what it is included">Create new</a>
+		
+				<a href="#" tabindex='-1' onclick='saveSubConnectivity("$submitURL", "$originalConnectivity", true);'
+				   class="action action-big-branch action-branch-connectivity column-control"
+				   title="Clone the connectivity cutting the unselected edges. Check the '* Select *' buttons bellow to see what it is included">Branch</a>
+
+		     
+
+
+			<div style="margin: 50px 5px 5px 5px;">
+					<h4 style="text-align:center; margin:40px 5px 5px 5px"><mark></mark> selection</h4>
 					<ul class="matrix-switcher tabswitcher" style="margin: 5%">
 						<li class="active">
 							<a
 							 href="#" 
 							 id="rightSideDefaultSelectedTabId"
-							onclick="hideRightSideTabs(this); startConnectivityMatrix();">Weights Matrix</a>
+							 onclick="hideRightSideTabs(this); startConnectivityMatrix();">Weights Matrix</a>
 						</li>
 					</ul>
 					<ul class="matrix-switcher tabswitcher" style="margin: 5%">
-						<li><a href="#" onclick="hideRightSideTabs(this); startConnectivityMatrix();">Tracts Matrix</a></li>
+						<li class="active">
+							<a 
+							href="#" 
+							onclick="hideRightSideTabs(this); startConnectivitytractMatrix();">Tracts Matrix</a></li>
 					</ul>
 			
 					<!--! Toolbar -->
-					<ul class="toolbar-inline matrix-control" style="margin: 10px">
+					
 			
 						<!--! Node/Edge operations -->
 						<li class="selection-ops">
@@ -204,18 +256,31 @@
 							</nav>
 						</li>
 			
-						<li class="selector-storage">
+						<li class="selector-storage" style="margin: 5px 5px 5px 5px">
 							<xi:include href="../commons/channel_selector_button.html" />
 							${drawRegionSelectorButton(connectivity_entity.display_name, groupedLabels, initialSelection, buttonTitle="Select Nodes")}
 						</li>
 			
-						<li class="selector-storage">
+						<li class="selector-storage" >
 							<xi:include href="../commons/channel_selector_quick.html"/>
 							${drawQuickSelector("selection-text-area", "loadSelectionFromTextBtn")}
 						</li>
-					</ul>
+					
 			
 				</div>
+
+
+                <div style="margin: 50px 5px 5px 5px;">
+
+				     <h4><mark>View</mark></h4>
+	                 <a id="showConnectivityDetailsBtn" href="#" onclick='displayNodeDetails("${connectivity_entity.gid}", "${connectivity_entity.type}", null, "Visualizers");'
+	                 class="action action-big-analyze"
+	                 style="left: 160px;top: -45px;"
+	                  title="Overlay info for current connectivity entity.">Open Overlay</a>
+				   
+				</div>
+
+				
 			
 	</section>
 
