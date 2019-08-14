@@ -251,6 +251,7 @@ function patchContextMenu() {
             cmenu.showShadow(pos.x,pos.y,e);
             // Resize the iframe if needed
             if (cmenu.useIframe) {
+                
                 $c.find('iframe').css({width:$c.width()+cmenu.shadowOffsetX+cmenu.shadowWidthAdjust,height:$c.height()+cmenu.shadowOffsetY+cmenu.shadowHeightAdjust});
             }
             $c.css( {top:pos.y+"px", left:pos.x+"px", position:"fixed",zIndex:9999} )[cmenu.showTransition](cmenu.showSpeed,((cmenu.showCallback)?function(){cmenu.showCallback.call(cmenu);}:null));
@@ -368,14 +369,33 @@ var GVAR_interestAreaVariables = {
 };
 
 function hideRightSideTabs(selectedHref) {
-    $(".matrix-switcher li").each(function (){
+    $(".matrix-switcher li").each(function () {
         $(this).removeClass('active');
     });
     selectedHref.parentElement.className = 'active';
-    $(".matrix-viewer").each(function () {
+    $(".matrix-container").each(function () {
         $(this).hide();
+        $(this).find('canvas').each(function () {
+            if (this.drawForImageExport) {           // remove redrawing method such that only current view is exported
+                this.drawForImageExport = null;
+            }
+        });
     });
 }
+
+
+// function hideRightSideTabs(selectedHref) {
+//     $(".matrix-switcher li").each(function (){
+//         $(this).removeClass('active');
+//     });
+
+//     selectedHref.parentElement.className = 'active';
+
+//     $(".matrix-viewer").each(function () {
+//         $(this).hide();
+//     });
+// }
+
 
 function showWeightsTable() {
     $("#div-matrix-weights").show();
@@ -395,6 +415,8 @@ function showTractsTable() {
 /*
  * ------------------------------Left side tab functions below------------------------------------
  */
+var CONNECTIVITY_tractMATRIX_TAB = 5; //  my work..
+var CONNECTIVITY_MATRIX_TAB = 6; //  my work...
 var CONNECTIVITY_TAB = 1;
 var CONNECTIVITY_2D_TAB = 2;
 var CONNECTIVITY_SPACE_TIME_TAB = 4;
@@ -430,6 +452,7 @@ function hideLeftSideTabs(selectedHref) {
 /**
  * Subscribes the gl canvases to resize events
  */
+
 function GFUNC_bind_gl_resize_handler(){
     var timeoutForResizing;
 
@@ -492,11 +515,56 @@ function start2DConnectivity(idx) {
 function startSpaceTimeConnectivity() {
     SELECTED_TAB = CONNECTIVITY_SPACE_TIME_TAB;
     $("#monitor-plot-id").show();
+    
     document.getElementById(CONNECTIVITY_SPACE_TIME_CANVAS_ID).redrawFunctionRef = drawSceneSpaceTime;   // interface-like function used in HiRes image exporting
+    
     connectivitySpaceTime_startGL();
+    
     GFUNC_bind_gl_resize_handler();
     // Sync size to parent. While the other tabs had been active the window might have resized.
     updateGLCanvasSize(CONNECTIVITY_SPACE_TIME_CANVAS_ID);
+    
     drawSceneSpaceTime();
+}
+
+
+/*
+
+My work for connectivity ............
+*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.**.*.*.**.*.*.**.*.*.**.*.*.*
+*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.**.*.*.**.*.*.**.*.*.**.*.*.*
+*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.**.*.*.**.*.*.**.*.*.**.*.*.*
+*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.**.*.*.**.*.*.**.*.*.**.*.*.*
+*.*.*.*.*.*.*.*.*.*.*.*.*.*.*.**.*.*.**.*.*.**.*.*.**.*.*.*
+*/
+
+
+function startConnectivityMatrix() {
+    
+
+    SELECTED_TAB = CONNECTIVITY_MATRIX_TAB; 
+    $("#matrix-plot-id").show(); // change id with my own id
+    document.getElementById(CONNECTIVITY_MATRIX_ID).redrawFunctionRef = draw;   // interface-like function used in HiRes image exporting
+    connectivityMatrix_startGL();
+
+   GFUNC_bind_gl_resize_handler();
+    // Sync size to parent. While the other tabs had been active the window might have resized.
+    updateGLCanvasSize(CONNECTIVITY_MATRIX_ID);
+   draw();
+}
+
+
+
+function startConnectivitytractMatrix() {
+    
+    SELECTED_TAB = CONNECTIVITY_tractMATRIX_TAB; 
+    $("#tract-plot-id").show(); // change id with my own id
+    document.getElementById(CONNECTIVITY_TRACTMATRIX_ID).redrawFunctionRef = drawtract ;   // interface-like function used in HiRes image exporting
+    connectivitytractMatrix_startGL();
+
+   GFUNC_bind_gl_resize_handler();
+    // Sync size to parent. While the other tabs had been active the window might have resized.
+    updateGLCanvasSize(CONNECTIVITY_TRACTMATRIX_ID);
+   drawtract();
 }
 

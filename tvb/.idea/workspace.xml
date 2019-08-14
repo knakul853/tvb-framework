@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="68d67fa4-134e-4a9c-bcfc-ec0bcf7c3aef" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/adapters/visualizers/phase_plane_interactive.py" beforeDir="false" afterPath="$PROJECT_DIR$/adapters/visualizers/phase_plane_interactive.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/adapters/abcadapter.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/adapters/abcadapter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/static/js/genericTVB.js" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/static/js/genericTVB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/connectivity_2D_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/connectivity_2D_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/connectivity_plot_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/connectivity_plot_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/main_connectivity.html" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/main_connectivity.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/matrix_with_quadrants.html" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/matrix_with_quadrants.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityGlobals.js" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityGlobals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityScript.js" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityScript.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityStepPlot.js" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityStepPlot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/matrixScript.js" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/matrixScript.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/time_series/control.html" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/time_series/control.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/time_series/view.html" beforeDir="false" afterPath="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/time_series/view.html" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/connectivity_plot_view.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="672">
+              <caret line="28" column="48" selection-start-line="28" selection-start-column="48" selection-end-line="28" selection-end-column="103" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityStepPlot.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="13104">
+              <caret line="546" column="10" selection-start-line="546" selection-start-column="10" selection-end-line="546" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/time_series/scripts/timeseriesSVG.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="552">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/main_connectivity.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5280">
+              <caret line="220" selection-start-line="220" selection-end-line="220" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityScript.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17040">
+              <caret line="710" column="30" selection-start-line="710" selection-start-column="4" selection-end-line="710" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityGlobals.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5088">
+              <caret line="212" column="3" selection-start-line="212" selection-start-column="3" selection-end-line="212" selection-end-column="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/myconnectivity_matrix.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret selection-end-column="87" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>plotColorBuffers</find>
+      <find>conectivitySpaceTime_initCanvas()</find>
+      <find>GVAR_interestAreaVariables</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityStepPlot.js" />
+        <option value="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/time_series/scripts/timeseriesSVG.js" />
+        <option value="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/time_series/view.html" />
+        <option value="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/main_connectivity.html" />
+        <option value="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityScript.js" />
+        <option value="$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityGlobals.js" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/tvb.iml" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="292" />
+    <option name="y" value="24" />
+    <option name="width" value="1400" />
+    <option name="height" value="1028" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="tvb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tvb" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tvb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tvb" type="462c0819:PsiDirectoryNode" />
+              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tvb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tvb" type="462c0819:PsiDirectoryNode" />
+              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tvb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tvb" type="462c0819:PsiDirectoryNode" />
+              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tvb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tvb" type="462c0819:PsiDirectoryNode" />
+              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="genshi" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tvb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tvb" type="462c0819:PsiDirectoryNode" />
+              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="genshi" type="462c0819:PsiDirectoryNode" />
+              <item name="visualizers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tvb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tvb" type="462c0819:PsiDirectoryNode" />
+              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="genshi" type="462c0819:PsiDirectoryNode" />
+              <item name="visualizers" type="462c0819:PsiDirectoryNode" />
+              <item name="connectivity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="tvb" type="b2602c69:ProjectViewProjectNode" />
+              <item name="tvb" type="462c0819:PsiDirectoryNode" />
+              <item name="interfaces" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="genshi" type="462c0819:PsiDirectoryNode" />
+              <item name="visualizers" type="462c0819:PsiDirectoryNode" />
+              <item name="connectivity" type="462c0819:PsiDirectoryNode" />
+              <item name="scripts" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="68d67fa4-134e-4a9c-bcfc-ec0bcf7c3aef" name="Default Changelist" comment="" />
+      <created>1560510297270</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1560510297270</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="64" y="-4" width="1857" height="1085" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.0795107" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32925585" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.25" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="0" visible="true" weight="0.083588175" />
+      <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" weight="0.32925585" />
+      <window_info anchor="bottom" id="Version Control" order="2" />
+      <window_info anchor="bottom" id="Python Console" order="3" />
+      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Find" order="5" />
+      <window_info anchor="bottom" id="Run" order="6" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="10" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/time_series/view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="15" column="46" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/burst/dynamic_mp_sliders.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/burst/main_burst.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/complex_coherence/view.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/connectivity_plot_view.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="672">
+          <caret line="28" column="48" selection-start-line="28" selection-start-column="48" selection-end-line="28" selection-end-column="103" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityStepPlot.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13104">
+          <caret line="546" column="10" selection-start-line="546" selection-start-column="10" selection-end-line="546" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/time_series/scripts/timeseriesSVG.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/main_connectivity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5280">
+          <caret line="220" selection-start-line="220" selection-end-line="220" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityScript.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17040">
+          <caret line="710" column="30" selection-start-line="710" selection-start-column="4" selection-end-line="710" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/scripts/connectivityGlobals.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5088">
+          <caret line="212" column="3" selection-start-line="212" selection-start-column="3" selection-end-line="212" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interfaces/web/templates/genshi/visualizers/connectivity/myconnectivity_matrix.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

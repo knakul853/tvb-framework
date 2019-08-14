@@ -1,0 +1,21 @@
+<div xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:py="http://genshi.edgewall.org/">
+
+	<py:def function="drawmytractmatrix()">	
+		<div id="tract-plot-id" class="matrix-container">
+			<script id="shader-mytractmatrix-fs" type="x-shader/x-fragment">
+				<xi:include href="../commons/shading/fragment_connectivity_plot.glsl" parse="text" />
+			</script>
+			
+			<script id="shader-mytractmatrix-vs" type="x-shader/x-vertex">
+				<xi:include href="../commons/shading/vertex_connectivity_plot.glsl" parse="text" />
+            </script>
+            		
+		    
+			<div class="specialviewer" id="canvasDiv">
+			<canvas id="GLcanvas_tractMATRIX" width="600px" height="600px" ></canvas>
+		       
+			</div>
+		</div>
+	</py:def>
+	
+</div>

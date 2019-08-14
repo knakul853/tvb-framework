@@ -47,9 +47,24 @@ width: 40%;
 }
 
 #main .view-column.matrix-controller {
-margin-right: 0;
-width: 59%;
+margin-right: 1%;
+overflow-x: hidden;
+width: 45%;
 }
+
+#main .view-column.view-matrix-tools {
+    overflow-x: hidden;
+    width: 12%;
+    }
+
+    .matrix-controller hgroup label {
+        position: absolute;
+        right: 150px;
+        color: #fff;
+        }
+        
+
+
 
 /* !-------------------------------------------- */
 /* !VIEWER COMPONENT: Viewer toolbar */
@@ -259,7 +274,7 @@ padding: 0;
 
 .matrix-controller hgroup input {
 display: inline-block;
-margin-left: 10px;
+margin-left: 0px;
 margin-top: 0;
 }
 
@@ -276,6 +291,8 @@ color: #fff;
 /* !-------------------------------------------- */
 
 .ss-connectivity .matrix-control {
+    margin: 5px 0px 5px 0px;
+    overflow: visible;
 }
 
 .ss-connectivity .matrix-control > li {
@@ -294,7 +311,7 @@ width: 20px;
 }
 
 .ss-connectivity .matrix-control .selector-storage {
-float: right;
+float: right; 
 }
 
 .ss-connectivity .matrix-control > li:last-child {
@@ -311,8 +328,7 @@ margin-right: 0;
 
 .ss-connectivity .matrix-control .selection-setter .extension, 
 .ss-connectivity .matrix-control .selection-ops .extension {
-left: 0;
-right: auto;
+right:-45px;
 }
 
 .ss-connectivity .matrix-control .selection-ops .dropdown-pane {
@@ -347,7 +363,7 @@ width: 100%;
 
 .ss-connectivity .matrix-control .selection-setter textarea {
 height: 15em;
-margin: 5px 0 5px 0;
+margin: 5px 0px 5px 0;
 }
 
 .ss-connectivity .matrix-control .selection-setter .action-analyze {

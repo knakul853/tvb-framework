@@ -1,0 +1,48 @@
+   
+   
+   
+<div xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:py="http://genshi.edgewall.org/">
+
+    <canvas id="mycanvas" width="600px" height="600px">
+            Your browser does not support the HTML5 canvas tag.</canvas>
+            
+<script>
+var canvas = document.getElementById('mycanvas');
+
+var l = 10;
+var sz = 1000/l;
+
+
+
+var c = canvas.getContext('2d');
+var i;
+
+        var arg1 = (Math.floor(Math.random()*255));
+        var arg2 = (Math.floor(Math.random()*255));
+        var arg3 = (Math.floor(Math.random()*255));
+
+        var temp = "rgb(" + arg1 + "," +  arg2 +"," + arg3 + ")";
+        var s1 = "#";
+
+        c.fillStyle = temp;
+        c.fillRect(100,100,sz,sz);
+        c.stroke();
+
+        
+        var arg1 = (Math.floor(Math.random()*255));
+        var arg2 = (Math.floor(Math.random()*255));
+        var arg3 = (Math.floor(Math.random()*255));
+
+        var temp = "rgb(" + arg1 + "," +  arg2 +"," + arg3 + ")";
+        var s1 = "#";
+
+        c.fillStyle = temp;
+        c.fillRect(200,100,sz,sz);
+        c.stroke();
+
+        
+
+            </script> 
+            
+
+</div>

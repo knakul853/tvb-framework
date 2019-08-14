@@ -112,12 +112,14 @@ function customMouseDown(event) {
     GFUNC_updateLeftSideVisualization();
 }
 
-function customMouseMove(event) {
+function customMouseMove(event) 
+{
     GL_handleMouseMove(event);
     GFUNC_updateLeftSideVisualization();
 }
 
-function _customMouseWheelEvent(delta) {
+function _customMouseWheelEvent(delta)
+ {
     GL_handleMouseWeel(delta);
     GFUNC_updateLeftSideVisualization();
     return false; // prevent default
@@ -127,7 +129,8 @@ function _customMouseWheelEvent(delta) {
 /**
  * Display the name for the selected connectivity node.
  */
-function displayNameForPickedNode() {
+function displayNameForPickedNode() 
+{
     if (CONN_pickedIndex === undefined || CONN_pickedIndex < 0) {
         displayMessage("No node is currently highlighted.", "infoMessage");
     } else {
@@ -137,7 +140,8 @@ function displayNameForPickedNode() {
 
 let linesBuffer;
 
-function initBuffers() {
+function initBuffers() 
+{
     const fakeNormal_1 = [0, 0, 1];
     let points = [];
     let normals = [];
@@ -270,7 +274,8 @@ function drawScene() {
         mvPushMatrix();
         mvTranslate([GVAR_additionalXTranslationStep, GVAR_additionalYTranslationStep, 0]);
 
-        for (let i = 0; i < NO_POSITIONS; i++){
+        for (let i = 0; i < NO_POSITIONS; i++)
+        {
             gl.uniform4fv(GL_shaderProgram.materialColor, GL_colorPickerInitColors[i]);
 
             setMatrixUniforms();
@@ -278,6 +283,7 @@ function drawScene() {
             SHADING_Context.connectivity_draw(GL_shaderProgram, positionsBuffers[i][0], positionsBuffers[i][1],
                 positionsBuffers[i][1], positionsBuffers[i][2], gl.TRIANGLES);
          }
+         
         const newPicked = GL_getPickedIndex();
         if (newPicked != null) {
             CONN_pickedIndex = newPicked;
@@ -706,6 +712,7 @@ function connectivity_initCanvas() {
 function saveRequiredInputs_con(fileWeights, fileTracts, filePositions, urlVerticesList, urlTrianglesList,
                                 urlNormalsList, urlLabels, condSpeed, rays, colors) {
     GVAR_initPointsAndLabels(filePositions, urlLabels);
+
     NO_POSITIONS = GVAR_positionsPoints.length;
     GFUNC_initTractsAndWeights(fileWeights, fileTracts);
     if (rays) raysWeights = $.parseJSON(rays);
@@ -716,10 +723,12 @@ function saveRequiredInputs_con(fileWeights, fileTracts, filePositions, urlVerti
     var ray_value;
 
     for (var i = 0; i < NO_POSITIONS; i++) {
-        if (raysWeights) {
+        if (raysWeights) 
+        {
             ray_value = computeRay(raysWeights[i], parseFloat($('#rayMinId').val()), parseFloat($('#rayMaxId').val()));
         }
-        else {
+        else 
+        {
             ray_value = 3;
         }
         positionsBuffers_3D[i] = HLPR_sphereBufferAtPoint(gl, GVAR_positionsPoints[i], ray_value);
@@ -728,7 +737,8 @@ function saveRequiredInputs_con(fileWeights, fileTracts, filePositions, urlVerti
     initBuffers();
 
     var urlVertices = $.parseJSON(urlVerticesList);
-    if (urlVertices.length > 0) {
+    if (urlVertices.length > 0) 
+    {
         var urlNormals = $.parseJSON(urlNormalsList);
         var urlTriangles = $.parseJSON(urlTrianglesList);
         getAsynchronousBuffers(urlVertices, verticesBuffers, false);
@@ -741,7 +751,7 @@ function saveRequiredInputs_con(fileWeights, fileTracts, filePositions, urlVerti
     CONN_initLinesHistorgram();
 }
 
-/**
+/**N
  * Change transparency of cortical surface from user-input.
  *
  * @param inputField user given input value for transparency of cortical-surface
@@ -765,6 +775,7 @@ function changeSurfaceTransparency(inputField) {
  */
 function prepareConnectivity(fileWeights, fileTracts, filePositions, urlVerticesList , urlTrianglesList,
                              urlNormalsList, urlLabels, isSingleMode, conductionSpeed, rays, colors) {
+
     connectivity_initCanvas();
     saveRequiredInputs_con(fileWeights, fileTracts, filePositions, urlVerticesList , urlTrianglesList,
                            urlNormalsList, urlLabels, conductionSpeed, rays, colors);
